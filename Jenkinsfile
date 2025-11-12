@@ -2,24 +2,21 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')  // credencial de DockerHub en Jenkins
-        IMAGE_NAME = "esteban889/php-simple-app"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')   
+        IMAGE_NAME = "esteban889/proyectofinal-3"           
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Esteban-Developer/php-simple-app.git'
+                git branch: 'main', url: 'https://github.com/Esteban-Developer/proyectofinal-3.git'
             }
         }
 
         stage('Detect Changes') {
             steps {
                 script {
-                    // Obtiene el último commit del repo local
                     def currentCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-
-                    // Archivo donde se guarda el último commit desplegado
                     def commitFile = "${env.WORKSPACE}/.last_commit"
 
                     if (fileExists(commitFile)) {
@@ -28,7 +25,6 @@ pipeline {
                             echo "No hay cambios nuevos desde el último despliegue (${lastCommit})."
                             currentBuild.result = 'SUCCESS'
                             currentBuild.displayName = "Sin cambios"
-                            // Detiene el pipeline aquí
                             error("No hay cambios nuevos — omitiendo despliegue.")
                         } else {
                             echo "Cambios detectados. Último commit anterior: ${lastCommit}"
@@ -37,7 +33,6 @@ pipeline {
                         echo "Primer despliegue: no existe registro previo de commit."
                     }
 
-                    // Guarda el commit actual para la próxima ejecución
                     writeFile file: commitFile, text: currentCommit
                 }
             }
@@ -46,18 +41,10 @@ pipeline {
         stage('Generate Tag') {
             steps {
                 script {
-                    // Obtener ID corto del commit actual
                     def GIT_COMMIT = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-
-                    // Obtener la fecha en formato YYYYMMDD-HHMMSS
                     def DATE_TAG = sh(script: "date +%Y%m%d-%H%M%S", returnStdout: true).trim()
-
-                    // Generar el tag combinando fecha y commit
                     def VERSION_TAG = "${DATE_TAG}-${GIT_COMMIT}"
-
-                    // Guardar la versión como variable global para usar en otros stages
                     env.VERSION_TAG = VERSION_TAG
-
                     echo "Versión generada: ${VERSION_TAG}"
                 }
             }
@@ -66,7 +53,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                    echo "=== Construyendo imagen ==="
+                    echo "=== Construyendo imagen Docker ==="
                     docker build -t $IMAGE_NAME:$VERSION_TAG .
                     docker tag $IMAGE_NAME:$VERSION_TAG $IMAGE_NAME:latest
                 '''
@@ -96,13 +83,13 @@ pipeline {
             sh 'docker system prune -f || true'
         }
         success {
-            echo "Pipeline completado con éxito"
+            echo "✅ Pipeline completado con éxito"
             echo "Se subieron las siguientes versiones:"
             echo "-> $IMAGE_NAME:latest"
             echo "-> $IMAGE_NAME:$VERSION_TAG"
         }
         failure {
-            echo "Pipeline falló"
+            echo "❌ Pipeline falló"
         }
     }
 }
