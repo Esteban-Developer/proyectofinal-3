@@ -40,10 +40,8 @@ pipeline {
             }
         }
 
+        // Siempre generamos tag, aunque no haya cambios
         stage('Generate Tag') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
             steps {
                 script {
                     def GIT_COMMIT = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
@@ -55,8 +53,8 @@ pipeline {
             }
         }
 
+        // Construcción y push siempre
         stage('Build App Image') {
-            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh '''
                     echo "=== Construyendo imagen de la App ==="
@@ -67,7 +65,6 @@ pipeline {
         }
 
         stage('Build MySQL Image') {
-            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh '''
                     echo "=== Construyendo imagen de MySQL con datos ==="
@@ -78,14 +75,12 @@ pipeline {
         }
 
         stage('Login to DockerHub') {
-            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
         stage('Push to DockerHub') {
-            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh '''
                     echo "=== Subiendo imágenes a DockerHub ==="
@@ -97,6 +92,7 @@ pipeline {
             }
         }
 
+        // Deploy local solo si hay cambios
         stage('Deploy Local') {
             when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
@@ -125,7 +121,7 @@ pipeline {
                             echo "Esperando..."
                             sleep 2
                         done'
-                        echo " App funcionando en http://localhost:8080"
+                        echo "✅ App funcionando en http://localhost:8080"
                     '''
                 }
             }
@@ -138,9 +134,7 @@ pipeline {
             sh 'docker system prune -f || true'
         }
         success {
-            echo "✅ =============================================="
             echo "✅ Pipeline completado con éxito"
-            echo "=============================================="
             echo "📦 Imágenes subidas a DockerHub:"
             echo "   🐘 App PHP: $APP_IMAGE:latest"
             echo "   🗄️  MySQL: $DB_IMAGE:latest"
