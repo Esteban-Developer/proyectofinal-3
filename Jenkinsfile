@@ -125,7 +125,7 @@ pipeline {
                             echo "Esperando..."
                             sleep 2
                         done'
-                        echo "✅ App funcionando en http://localhost:8080"
+                        echo " App funcionando en http://localhost:8080"
                     '''
                 }
             }
