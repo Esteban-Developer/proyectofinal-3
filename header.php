@@ -26,6 +26,7 @@ include('db.php');
 <link rel='stylesheet' href='css/owl.carousel.min.css' type='text/css'>
 <link rel='stylesheet' href='css/slicknav.min.css' type='text/css'>
 <link rel='stylesheet' href='css/style.css' type='text/css'>
+<link rel='stylesheet' href='css/dark-mode.css' type='text/css'>
 
 </head>
 
@@ -46,6 +47,12 @@ include('db.php');
                         <a href="https://www.facebook.com/" target="_blank"><i class="ti-facebook"></i></a>
                         
                         <a href="https://www.instagram.com/?hl=es" target="_blank"><i class="ti-instagram"></i></a>
+                        
+                        <!-- Botón de Modo Oscuro -->
+                        <label class="theme-toggle">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="theme-slider"></span>
+                        </label>
                     </div>
                 </div>
 

@@ -1,0 +1,426 @@
+/* Estilos para el Modo Oscuro */
+
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+/* Botón de cambio de tema */
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.theme-slider:before {
+  position: absolute;
+  content: "☀️";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+input:checked + .theme-slider {
+  background-color: #fe4231;
+}
+
+input:checked + .theme-slider:before {
+  transform: translateX(24px);
+  content: "🌙";
+}
+
+/* Header en modo oscuro */
+body.dark-mode .header-top {
+  background-color: #2a2a2a;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .header-top .top-social a,
+body.dark-mode .header-top .login-panel {
+  color: #e0e0e0;
+}
+
+body.dark-mode .header-top .f-right .nav-right li.user-icon .login-hover {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .nav-item {
+  background: #2a2a2a;
+}
+
+body.dark-mode .nav-item .nav-depart .depart-btn {
+  background: #333333;
+}
+
+body.dark-mode .nav-item .nav-depart .depart-btn .depart-hover {
+  background: #2a2a2a;
+}
+
+body.dark-mode .nav-item .nav-depart .depart-btn .depart-hover li a {
+  color: #e0e0e0;
+}
+
+body.dark-mode .nav-item .nav-menu li a {
+  color: #e0e0e0;
+  border-right-color: #3a3a3a;
+}
+
+/* Inner header */
+body.dark-mode .inner-header .logo a {
+  color: #fe4231;
+}
+
+body.dark-mode .inner-header .input-group input {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .inner-header .nav-right li.cart-icon a,
+body.dark-mode .inner-header .nav-right li.cart-price {
+  color: #e0e0e0;
+}
+
+body.dark-mode .inner-header .nav-right li.cart-icon .cart-hover {
+  background: #2a2a2a;
+}
+
+body.dark-mode .inner-header .nav-right li.cart-icon .cart-hover .select-items table tr td.si-text .product-selected h6 {
+  color: #e0e0e0;
+}
+
+/* Títulos y textos */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #e0e0e0;
+}
+
+body.dark-mode p {
+  color: #b0b0b0;
+}
+
+/* Secciones */
+body.dark-mode .banner-section,
+body.dark-mode .women-banner,
+body.dark-mode .man-banner {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .single-banner .inner-text h4 {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+
+/* Productos */
+body.dark-mode .product-item .pi-text a h5 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .product-item .pi-pic ul li {
+  background: #2a2a2a;
+}
+
+body.dark-mode .product-item .pi-pic ul li a {
+  color: #e0e0e0;
+}
+
+body.dark-mode .filter-control h3 {
+  color: #e0e0e0;
+}
+
+/* Footer */
+body.dark-mode .footer-section {
+  background: #0a0a0a;
+}
+
+body.dark-mode .footer-left ul li,
+body.dark-mode .footer-widget ul li a,
+body.dark-mode .newslatter-item p {
+  color: #b0b0b0;
+}
+
+body.dark-mode .footer-widget h5,
+body.dark-mode .newslatter-item h5 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .newslatter-item .subscribe-form input {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+
+/* Breadcrumb */
+body.dark-mode .breadcrumb-text {
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .breadcrumb-text a {
+  color: #e0e0e0;
+}
+
+/* Filtros de productos */
+body.dark-mode .filter-widget .fw-title {
+  color: #e0e0e0;
+}
+
+body.dark-mode .filter-widget .filter-catagories li a {
+  color: #b0b0b0;
+}
+
+body.dark-mode .filter-widget .fw-brand-check .bc-item label .checkmark {
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .filter-widget .filter-range-wrap .range-slider .price-input input {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+/* Carrito de compras */
+body.dark-mode .cart-table table {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .cart-table table tr th {
+  color: #e0e0e0;
+  background: #333333;
+  border-bottom-color: #3a3a3a;
+}
+
+body.dark-mode .cart-table table tr td {
+  color: #e0e0e0;
+}
+
+body.dark-mode .cart-table table tr td.cart-title h5 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .cart-table table tr td.close-td {
+  color: #e0e0e0;
+}
+
+body.dark-mode .discount-coupon h6,
+body.dark-mode .proceed-checkout ul li {
+  color: #e0e0e0;
+}
+
+body.dark-mode .discount-coupon .coupon-form input,
+body.dark-mode .proceed-checkout ul {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .proceed-checkout ul {
+  background: #2a2a2a;
+}
+
+/* Detalles de producto */
+body.dark-mode .product-details .pd-title h3,
+body.dark-mode .product-details .pd-size-choose .sc-item label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .product-details .quantity .pro-qty {
+  border-color: #3a3a3a;
+  background: #2a2a2a;
+}
+
+body.dark-mode .product-details .quantity .pro-qty input {
+  color: #e0e0e0;
+}
+
+body.dark-mode .product-details .pd-tags li {
+  color: #b0b0b0;
+}
+
+body.dark-mode .product-details .pd-tags li span {
+  color: #e0e0e0;
+}
+
+/* Tabs de producto */
+body.dark-mode .tab-item ul li a {
+  background: #2a2a2a;
+  color: #b0b0b0;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .tab-item ul li a.active {
+  color: #e0e0e0;
+}
+
+body.dark-mode .product-content h5 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .specification-table table tr td {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .specification-table table tr td.p-catagory {
+  color: #e0e0e0;
+}
+
+/* Checkout */
+body.dark-mode .checkout-content .content-btn,
+body.dark-mode .checkout-content input {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .checkout-form label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .checkout-form input {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .checkout-form .place-order .order-total {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .checkout-form .place-order .order-total .order-table li {
+  color: #e0e0e0;
+  border-bottom-color: #3a3a3a;
+}
+
+/* Contacto */
+body.dark-mode .contact-title h4 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .contact-widget .cw-item {
+  background: #2a2a2a;
+  box-shadow: 0px 8px 35px 10px #0a0a0a;
+}
+
+body.dark-mode .contact-widget .cw-item .ci-text p {
+  color: #e0e0e0;
+}
+
+body.dark-mode .contact-form .leave-comment h4 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .contact-form .leave-comment .comment-form input,
+body.dark-mode .contact-form .leave-comment .comment-form textarea {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+/* Formularios de registro/login */
+body.dark-mode .register-form h2,
+body.dark-mode .login-form h2 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .register-form form .group-input label,
+body.dark-mode .login-form form .group-input label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .register-form form .group-input input,
+body.dark-mode .login-form form .group-input input {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .register-form .switch-login .or-login,
+body.dark-mode .login-form .switch-login .or-login {
+  color: #e0e0e0;
+}
+
+/* Cards y boxes */
+body.dark-mode .card {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .card-body {
+  color: #e0e0e0;
+}
+
+/* Select options */
+body.dark-mode select,
+body.dark-mode .nice-select {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+}
+
+/* Insider - Mi cuenta */
+body.dark-mode .insider ul li a {
+  color: #e0e0e0 !important;
+}
+
+/* Preloader */
+body.dark-mode #preload {
+  background: #0a0a0a;
+}
+
+/* Hero section */
+body.dark-mode .hero-items .single-hero-items h1 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .hero-items .single-hero-items span {
+  color: #fe4231;
+}
+
+/* Transición suave */
+body,
+.header-top,
+.inner-header,
+.nav-item,
+.product-item,
+.footer-section,
+.cart-table table,
+.card,
+input,
+select,
+textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

@@ -85,3 +85,6 @@
 <script src="js/jquery.slicknav.js"></script>
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/main.js"></script>
+
+<!-- Script del Modo Oscuro -->
+<script src="js/dark-mode.js"></script>
