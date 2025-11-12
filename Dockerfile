@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd mysqli pdo pdo_mysql zip
 
-# Habilitar mod_rewrite (por si tu app lo necesita)
+# Habilitar mod_rewrite
 RUN a2enmod rewrite
 
 # Copiar todos los archivos del proyecto
@@ -18,5 +18,5 @@ RUN chown -R www-data:www-data /var/www/html
 # Exponer puerto 80
 EXPOSE 80
 
-# Comando de inicio de Apache
-CMD ["apache2-foreground"]
+# Esperar a que MySQL esté listo antes de iniciar Apache
+CMD bash -c "until mysqladmin ping -h db --silent; do echo 'Esperando a MySQL...'; sleep 2; done && echo 'MySQL listo. Iniciando Apache...' && apache2-foreground"

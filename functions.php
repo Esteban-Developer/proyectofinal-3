@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', '', 'threaderz_store');
+$db = mysqli_connect('db', 'root', '1234', 'threaderz_store');
 
 
 function getRealIpUser()
