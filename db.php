@@ -1,3 +1,3 @@
 <?php
-$con = mysqli_connect("localhost","root", "", "threaderz_store");
+$con = mysqli_connect("db","root", "1234", "threaderz_store");
 ?>

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: threaderz_app
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=12345
+      - DB_NAME=threaderz_store
+    volumes:
+      - .:/var/www/html
+
+  db:
+    image: mysql:8.0
+    container_name: threaderz_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: threaderz_store
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./store.sql:/docker-entrypoint-initdb.d/store.sql
+
+volumes:
+  db_data:
