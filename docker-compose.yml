@@ -2,19 +2,20 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    image: esteban889/proyectofinal-3:latest  # ← Usa tu imagen de DockerHub
     container_name: threaderz_app
     ports:
       - "8080:80"
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASS=12345
-      - DB_NAME=threaderz_store
-    volumes:
-      - .:/var/www/html
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: 12345
+      DB_NAME: threaderz_store
+    restart: always
+    networks:
+      - threaderz-network
 
   db:
     image: mysql:8.0
@@ -23,9 +24,28 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_DATABASE: threaderz_store
+    command: >
+      --max_allowed_packet=256M
+      --innodb-buffer-pool-size=64M
+      --skip-host-cache
+      --skip-name-resolve
+      --require_secure_transport=OFF
     volumes:
       - db_data:/var/lib/mysql
       - ./store.sql:/docker-entrypoint-initdb.d/store.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - threaderz-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p12345"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:
+
+networks:
+  threaderz-network:
+    driver: bridge
