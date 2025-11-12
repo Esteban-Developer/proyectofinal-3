@@ -56,9 +56,7 @@ pipeline {
         }
 
         stage('Build App Image') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
+            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh '''
                     echo "=== Construyendo imagen de la App ==="
@@ -69,9 +67,7 @@ pipeline {
         }
 
         stage('Build MySQL Image') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
+            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh '''
                     echo "=== Construyendo imagen de MySQL con datos ==="
@@ -82,27 +78,19 @@ pipeline {
         }
 
         stage('Login to DockerHub') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
+            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
         stage('Push to DockerHub') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
+            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 sh '''
                     echo "=== Subiendo imágenes a DockerHub ==="
-                    
-                    # App
                     docker push $APP_IMAGE:$VERSION_TAG
                     docker push $APP_IMAGE:latest
-                    
-                    # MySQL
                     docker push $DB_IMAGE:$VERSION_TAG
                     docker push $DB_IMAGE:latest
                 '''
@@ -110,9 +98,7 @@ pipeline {
         }
 
         stage('Deploy Local') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
+            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 script {
                     echo "=== Desplegando aplicación localmente ==="
@@ -121,10 +107,8 @@ pipeline {
                         sleep 5
                         docker-compose pull
                         docker-compose up -d
-                        
                         echo "Esperando a que MySQL esté listo..."
                         sleep 20
-                        
                         docker-compose ps
                     '''
                 }
@@ -132,18 +116,15 @@ pipeline {
         }
 
         stage('Health Check') {
-            when {
-                expression { env.SKIP_DEPLOY != "true" }
-            }
+            when { expression { env.SKIP_DEPLOY != "true" } }
             steps {
                 script {
                     echo "=== Verificando aplicación ==="
                     sh '''
-                        timeout 30 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do 
+                        timeout 30 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do
                             echo "Esperando..."
                             sleep 2
                         done'
-                        
                         echo "✅ App funcionando en http://localhost:8080"
                     '''
                 }
@@ -160,15 +141,11 @@ pipeline {
             echo "✅ =============================================="
             echo "✅ Pipeline completado con éxito"
             echo "=============================================="
-            echo ""
             echo "📦 Imágenes subidas a DockerHub:"
             echo "   🐘 App PHP: $APP_IMAGE:latest"
             echo "   🗄️  MySQL: $DB_IMAGE:latest"
-            echo ""
             echo "🚀 Para desplegar en cualquier máquina:"
             echo "   curl -sSL https://raw.githubusercontent.com/Esteban-Developer/proyectofinal-3/main/quick-deploy.sh | bash"
-            echo ""
-            echo "=============================================="
         }
         failure {
             echo "❌ Pipeline falló"
