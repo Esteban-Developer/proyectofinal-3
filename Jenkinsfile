@@ -24,14 +24,15 @@ pipeline {
                         def lastCommit = readFile(commitFile).trim()
                         if (currentCommit == lastCommit) {
                             echo "No hay cambios nuevos desde el último despliegue (${lastCommit})."
-                            currentBuild.result = 'SUCCESS'
                             currentBuild.displayName = "Sin cambios"
-                            error("No hay cambios nuevos — omitiendo despliegue.")
+                            env.SKIP_DEPLOY = "true"
                         } else {
                             echo "Cambios detectados. Último commit anterior: ${lastCommit}"
+                            env.SKIP_DEPLOY = "false"
                         }
                     } else {
-                        echo "Primer despliegue: no existe registro previo de commit."
+                        echo "Primer despliegue: no existe registro previo de commit. Se desplegará."
+                        env.SKIP_DEPLOY = "false"
                     }
 
                     writeFile file: commitFile, text: currentCommit
@@ -40,6 +41,9 @@ pipeline {
         }
 
         stage('Generate Tag') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 script {
                     def GIT_COMMIT = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
@@ -52,6 +56,9 @@ pipeline {
         }
 
         stage('Build App Image') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 sh '''
                     echo "=== Construyendo imagen de la App ==="
@@ -62,6 +69,9 @@ pipeline {
         }
 
         stage('Build MySQL Image') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 sh '''
                     echo "=== Construyendo imagen de MySQL con datos ==="
@@ -72,12 +82,18 @@ pipeline {
         }
 
         stage('Login to DockerHub') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
         stage('Push to DockerHub') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 sh '''
                     echo "=== Subiendo imágenes a DockerHub ==="
@@ -94,6 +110,9 @@ pipeline {
         }
 
         stage('Deploy Local') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 script {
                     echo "=== Desplegando aplicación localmente ==="
@@ -113,6 +132,9 @@ pipeline {
         }
 
         stage('Health Check') {
+            when {
+                expression { env.SKIP_DEPLOY != "true" }
+            }
             steps {
                 script {
                     echo "=== Verificando aplicación ==="
@@ -131,7 +153,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker logout'
+            sh 'docker logout || true'
             sh 'docker system prune -f || true'
         }
         success {
