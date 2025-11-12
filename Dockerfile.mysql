@@ -1,0 +1,11 @@
+FROM mysql:8.0
+
+# Copiar el script SQL
+COPY store.sql /docker-entrypoint-initdb.d/
+
+# Configuración
+ENV MYSQL_ROOT_PASSWORD=12345
+ENV MYSQL_DATABASE=threaderz_store
+
+# Comandos optimizados
+CMD ["mysqld", "--max_allowed_packet=256M", "--innodb-buffer-pool-size=64M", "--skip-host-cache", "--skip-name-resolve", "--require_secure_transport=OFF"]
