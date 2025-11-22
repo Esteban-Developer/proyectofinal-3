@@ -237,7 +237,8 @@ docker exec -it threaderz_db mysql -u root -p
 
 <p align="center">
   <strong>Esteban Murillo</strong><br>
-  <em>Desarrollador</em>
+  <strong>Miguel Villamil</strong><br>
+  <em>Desarrolladores</em>
 </p>
 
 <p align="center">
